@@ -36,7 +36,7 @@ def resistor_search(vin, vout, max_error,greater_than):
         resistores = []
         for r1 in valores:
             for r2 in valores:
-                error = abs(vout - vin*(r2/(r1+r2)))
+                error = abs(vout - vin*(r2/(r1+r2)))/vout
                 if error <= max_error:
                     doc = {'R1':round(r1,2),'R2':round(r2,2),'Error':round(error,4)}
                     if doc not in resistores:
