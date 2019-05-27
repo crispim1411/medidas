@@ -10,7 +10,7 @@ source env/bin/activate
 pip install -r requirements.txt
 
 # Utilização do comando
-python resistor_search <Vin> <Vout>
+python resistor_search Vin Vout
 
 # Para mais informações
 python resistor_search --help
