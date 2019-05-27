@@ -12,7 +12,7 @@ import click
 def resistor_search(vin, vout, max_error,greater_than):
     """Função de busca de valores de resistores para um divisor de tensão
     utilizando resistores de valores comerciais. Apresentado em verde as escolhas
-    erro nulo (teórico) e em vermelho as com erro quase limite.
+    erro nulo (teórico) e em vermelho excedem 90% da faixa de erro.
 
     Parâmetros:
 
@@ -24,7 +24,7 @@ def resistor_search(vin, vout, max_error,greater_than):
     """
     try:
         val_tab = [1.0,1.1,1.2,1.3,1.5,1.6,1.8,2.0,2.2,2.4,2.7,3.0,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1]
-        pot_symbol = {'10':10,'100':100,'1k':10**3,'10k':10**4,'100k':10**5,'1M':10**6}
+        pot_symbol = {'1':1,'10':10,'100':100,'1k':10**3,'10k':10**4,'100k':10**5,'1M':10**6}
 
         if greater_than:
             gt_val = pot_symbol.get(greater_than)
@@ -32,13 +32,13 @@ def resistor_search(vin, vout, max_error,greater_than):
         else:
             pot = pot_symbol.values()
 
-        valores = [round(i*m,2) for i in val_tab for m in pot]
+        valores = [i*m for i in val_tab for m in pot]
         resistores = []
         for r1 in valores:
             for r2 in valores:
                 error = abs(vout - vin*(r2/(r1+r2)))
                 if error <= max_error:
-                    doc = {'R1':r1,'R2':r2,'Error':error}
+                    doc = {'R1':round(r1,2),'R2':round(r2,2),'Error':round(error,4)}
                     if doc not in resistores:
                         resistores.append(doc)
 
