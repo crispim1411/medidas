@@ -56,7 +56,7 @@ def resistor_search(vin, vout, max_error,greater_than_equal):
                 click.echo(click.style(str(r),fg='red'))
             elif r['Error']/max_error>0.3:
                 click.echo(click.style(str(r),fg='yellow'))
-            elif r['Error']/max_error>0:
+            elif r['Error']/max_error>=0:
                 click.echo(click.style(str(r),fg='green'))
 
         print(f'{len(resistores)} Resultados.')
