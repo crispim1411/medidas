@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-import click
+import click, re
 
 
 @click.command()
@@ -21,29 +21,27 @@ def resistor_search(vin, vout, max_error,greater_than_equal):
 
     Parâmetros:
 
-        vin(float): Valor de entrada do resistor de tensão.
+        vin(float): Valor de entrada do divisor de tensão.
 
-        vout(float): Valor de saída do resistor de tensão.
-
-        max_error(float): Valor máximo de erro do sistema.
+        vout(float): Valor de saída do divisor de tensão.
     """
     try:
         val_tab = [1.0,1.1,1.2,1.3,1.5,1.6,1.8,2.0,2.2,2.4,2.7,3.0,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1]
-        pot_symbol = {'1':1,'10':10,'100':100,'1k':10**3,'10k':10**4,'100k':10**5,'1M':10**6}
+        pot_symbol = {'1':1,'10':10,'100':100,'1k':1000,'10k':10**4,'100k':10**5,'1M':10**6}
 
         if greater_than_equal:
-            gte_val = pot_symbol.get(greater_than_equal)
-            pot = [p for p in pot_symbol.values() if p>=gte_val]
+            gte_val = pot_symbol[greater_than_equal]
+            pot = [p for p in pot_symbol.values() if p >= gte_val]
         else:
             pot = pot_symbol.values()
-        valores = [i*m for i in val_tab for m in pot]
+        valores = [round(i*m,2) for i in val_tab for m in pot]
 
         resistores = []
         for r1 in valores:
             for r2 in valores:
                 error = abs(vout - vin*(r2/(r1+r2)))/vout
                 if error <= max_error:
-                    doc = {'R1':round(r1,2),'R2':round(r2,2),'Error':round(error,4)}
+                    doc = {'R1':resistor_symbol(r1),'R2':resistor_symbol(r2),'Error':round(error,4)}
                     if doc not in resistores:
                         resistores.append(doc)
 
@@ -67,6 +65,30 @@ def resistor_search(vin, vout, max_error,greater_than_equal):
 
     except Exception as e:
         print(f'Error: {e}')
+
+
+def resistor_symbol(resistor):
+    """Função para converter valor resistor para notação comercial.
+    Exemplo: 2700 -> 2.7k
+
+    Parâmetros:
+        resistor (float) : Resistor a ser convertido em notação.
+
+    Retorna :
+        str_resistor (str) : String com a notação comercial do resistor.
+    """
+
+    m = re.search('[0-9]+', str(resistor))
+    if m:
+        digits = m.end()
+        if digits > 6:
+            str_resistor = str(resistor/10**6).split('.0')[0] + 'M'
+        elif digits > 3:
+            str_resistor = str(resistor/1000).split('.0')[0] + 'k'
+        else:
+            str_resistor = str(resistor).split('.0')[0]
+
+        return str_resistor
 
 
 if __name__ == '__main__':
