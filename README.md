@@ -6,17 +6,18 @@ desejados.
 # Criação de um ambiente virtual
 Linux
 -----
-* python3 -m venv env
-* source env/bin/activate
+* python3 -m pip install pipenv
+* python3 -m pipenv install
+* pipenv shell
 
 Windows
 -------
-* python -m pip instal virtualenv
-* virtualenv env
-* env\Scripts\activate
+* python -m pip install pipenv
+* python -m pipenv install
+* pipenv shell
 
 # Instalando dependências
-pip install -r requirements.txt
+pipenv install Pipfile
 
 # Utilização do comando
 python resistor_search.py Vin Vout
