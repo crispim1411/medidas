@@ -8,13 +8,13 @@ Linux
 -----
 * python3 -m pip install pipenv
 * python3 -m pipenv install
-* pipenv shell
+* python3 -m pipenv shell
 
 Windows
 -------
 * python -m pip install pipenv
 * python -m pipenv install
-* pipenv shell
+* python -m pipenv shell
 
 # Instalando dependências
 pipenv install Pipfile
