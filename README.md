@@ -6,9 +6,9 @@ desejados.
 # Criação de um ambiente virtual
 Linux
 -----
-* python3 -m pip install pipenv
-* python3 -m pipenv install
-* python3 -m pipenv shell
+* sudo apt install pipenv
+* pipenv install
+* pipenv shell
 
 Windows
 -------
