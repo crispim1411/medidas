@@ -20,7 +20,7 @@ Windows
 pipenv install Pipfile
 
 # Utilização do comando
-python resistor_search.py Vin Vout
+python resistor_search.py <Vin> <Vout>
 
 # Para mais informações
 python resistor_search.py --help
