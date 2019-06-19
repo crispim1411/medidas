@@ -12,9 +12,9 @@ Linux
 
 Windows
 -------
-* python -m pip install pipenv
-* python -m pipenv install
-* python -m pipenv shell
+* pip install pipenv
+* pipenv install
+* pipenv shell
 
 # Instalando dependências
 pipenv install Pipfile
